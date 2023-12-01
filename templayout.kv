@@ -1,0 +1,290 @@
+#:import C kivy.utils.get_color_from_hex
+#: set black get_color_from_hex("#000000")
+#: set blue get_color_from_hex("#3b719f")
+#: set white get_color_from_hex("#ffffff")
+#: set lightgray get_color_from_hex("#bebebe")
+#: set accent get_color_from_hex("6f6f6f")
+
+
+<MyCard@MDCard>:
+    orientation: 'horizontal'
+    md_bg_color: get_color_from_hex("#bebebe")
+    size_hint_y: 0.1
+    size_hint_x: 1
+    padding: 40,0,40,0
+    radius: [10]
+    valign: 'center'
+    spacing: '5dp'
+
+<MyLabel@MDLabel>:
+    font_size: '16dp'
+    bold: 'true'
+    height: '50dp'
+    size_hint: (0.5,0.5)
+    pos_hint: {'x': 0.1, 'center_y': 0.5}
+    halign: 'left'
+
+<categorydialog>:
+    orientation: 'vertical'
+    spacing: "12dp"
+    size_hint_y: None
+    height: "50dp"
+    MDTextField:
+        id: createCategoryTextField_id
+        hint_text: 'Category Name'
+        size_hint: (1,None)
+        pos_hint: {'center_y': 0.5}
+        hint_text_color_normal: black
+        line_color_normal:black
+        text_color_focus:black
+        hint_text_color_focus: blue
+        line_color_focus: blue
+
+
+<Demo>:
+    MDScreen:
+        id: main_screen_id
+        md_bg_color: get_color_from_hex("#aeaeae")
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: '01dp'
+            padding: '0dp'
+
+            MDTopAppBar:
+                id: appbar_id
+                pos_hint: {"top":1}
+                title: "Transactions Temp"
+                elevation: 2
+                md_bg_color: blue
+                left_action_items: [["menu"]]
+                right_action_items: [["file-export", root.exportConfirm],["file-eye", root.viewCSV]]
+
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: '05dp'
+                padding: '15dp'
+
+                MyCard:
+                    MyLabel:
+                        text: "Type"
+                    MDRoundFlatButton:
+                        id: expenseBtn_id
+                        text: "Expense"
+                        size_hint: (0.25,0.5)
+                        pos_hint: {'center_y': 0.5}
+                        line_width: 1.2
+                        line_color: blue
+                        text_color: white
+                        md_bg_color: blue
+                        on_release: root.typeButtonPressed("expenseBtn_id")
+                    MDRoundFlatButton:
+                        id: incomeBtn_id
+                        text: "Income"
+                        size_hint: (0.25,0.5)
+                        pos_hint: {'center_y': 0.5}
+                        line_width: 1.2
+                        line_color: black
+                        text_color: black
+                        md_bg_color: lightgray
+                        on_release: root.typeButtonPressed("incomeBtn_id")
+
+                MyCard:
+                    MyLabel:
+                        text: "Category"
+                    MDRoundFlatButton:
+                        id: selectCategoryBtn_id
+                        text: "Select Category"
+                        size_hint: (0.4,0.5)
+                        line_color: black
+                        line_width: 1.2
+                        text_color: black
+                        pos_hint: {'center_y': 0.5}
+                        on_release: root.categoryDropdown()
+                    MDIconButton:
+                        icon: "plus"
+                        font_size: '12dp'
+                        size_hint: (0.1,0.8)
+                        pos_hint: {'right':1,'center_y': 0.5}
+                        on_release: root.createCategoryDialog()
+
+                MyCard:
+                    MyLabel:
+                        text: "Name"
+                    MDTextField:
+                        id: nameInput_id
+                        hint_text: 'Enter Name'
+                        size_hint: (0.5,None)
+                        pos_hint: {'center_y': 0.5}
+                        hint_text_color_normal: black
+                        line_color_normal:black
+                        text_color_focus:black
+                        hint_text_color_focus: blue
+                        line_color_focus: blue
+
+                MyCard:
+                    MyLabel:
+                        text: "Description"
+                    MDTextField:
+                        id: descriptionInput_id
+                        hint_text: 'Enter Description'
+                        text_size: '12dp'
+                        hint_text_color_normal: black
+                        line_color_normal:black
+                        text_color_focus:black
+                        hint_text_color_focus: blue
+                        line_color_focus: blue
+                        size_hint: (0.5,None)
+                        pos_hint: {'center_y': 0.5}
+
+                MyCard:
+                    MyLabel:
+                        text: "Source"
+                    MDRoundFlatButton:
+                        id: selectSourceBtn_id
+                        text: "Select Source"
+                        size_hint: (0.5,0.5)
+                        pos_hint: {'center_y': 0.5}
+                        line_color: black
+                        line_width: 1.2
+                        text_color: black
+                        on_release: root.sourceDropdown()
+
+                MyCard:
+                    MyLabel:
+                        text: "Amount"
+                    MDTextField:
+                        id: amountInput_id
+                        hint_text: 'Enter Amount'
+                        size_hint: (0.5,None)
+                        font_size: '16dp'
+                        hint_text_color_normal: black
+                        line_color_normal:black
+                        text_color_focus:black
+                        hint_text_color_focus: blue
+                        line_color_focus: blue
+                        pos_hint: {'center_y': 0.5}
+
+                MyCard:
+                    MyLabel:
+                        text: "Date-Time"
+
+                    MDLabel:
+                        id: dateTimeLabel_id
+                        text: "hello"
+                        font_size: '12dp'
+                        height: '50dp'
+                        size_hint: (0.4,0.5)
+                        pos_hint: {'x': 0.5, 'center_y': 0.5}
+                        halign: 'left'
+
+                    MDIconButton:
+                        icon: "calendar"
+                        font_size: '12dp'
+                        size_hint: (0.1,0.8)
+                        pos_hint: {'right':1,'center_y': 0.5}
+                        on_release: root.choose_date()
+
+
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    padding: 0,20,0,0
+
+                    MDRaisedButton:
+                        text: "Save Transaction"
+                        size_hint: (0.8,0.1)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                        md_bg_color: blue
+                        on_release: root.saveTransaction()
+                    BoxLayout:
+                        padding: 0,10,0,0
+                        MDCard:
+                            id: viewTxnCard_id
+                            opacity: 0
+                            padding: 0
+                            orientation: 'vertical'
+                            md_bg_color: get_color_from_hex("#bebebe")
+                            size_hint_x: 1
+                            radius: [10]
+
+                            BoxLayout:
+                                orientation: 'vertical'
+                                padding:10
+
+                                MDLabel:
+                                    id: logbox_id
+                                    text:"Expense, Zomato, Dinner, hmmmm, HDFC Credit Card, 512, 30-11-2023 23:02"
+                                    md_bg_color: lightgray
+                                    font_size: '10dp'
+                                    text_size: self.size
+                                    size_hint: (1,1)
+                                    pos_hint: {'top': 1}
+                                    halign: 'left'
+                                    valign: 'top'
+                                BoxLayout:
+
+                                    orientation:'vertical'
+                                    size_hint: (1,0.1)
+                                    spacing: 15
+                                    padding: 10,0,10,0
+                                    MDSeparator:
+                                        color: accent
+                                    MDCard:
+                                        orientation:'horizontal'
+                                        md_bg_color: lightgray
+                                        spacing: 15
+
+                                        MDIconButton:
+                                            icon: "menu-left"
+                                            font_size: '12dp'
+                                            size_hint: (0.03,0.8)
+                                            pos_hint: {'center_y': 0.5}
+                                            on_release: root.changePage("dec")
+
+
+                                        MDLabel:
+                                            id: pagelabel_id
+                                            text_size: self.size
+                                            text:"?"
+                                            theme_text_color: 'Custom'
+                                            text_color: black
+                                            halign:'center'
+                                            valign:'middle'
+                                            size_hint: (0.03,1)
+
+                                        MDIconButton:
+                                            icon: "menu-right"
+                                            font_size: '12dp'
+                                            size_hint: (0.03,0.8)
+                                            pos_hint: {'center_y': 0.5}
+                                            on_release: root.changePage("inc")
+
+                                        MDLabel:
+                                            text_size: self.size
+                                            text:"Delete?"
+                                            theme_text_color: 'Custom'
+                                            text_color: accent
+                                            halign:'center'
+                                            valign:'middle'
+                                            size_hint: (0.2,1)
+                                        MDTextField:
+                                            id: deleteRecordRow_id
+                                            hint_text: 'Row Val'
+                                            size_hint: (0.1,None)
+                                            pos_hint: {'center_y': 0.5}
+                                            hint_text_color_normal: accent
+                                            line_color_normal:accent
+                                            text_color_focus:accent
+                                            hint_text_color_focus: accent
+                                            line_color_focus: accent
+                                        MDRoundFlatButton:
+                                            id: deleteRecordBtn_id
+                                            text: "OK"
+                                            size_hint: (0.05,0.99)
+                                            pos_hint: {'center_y': 0.5}
+                                            line_width: 1.2
+                                            line_color: accent
+                                            text_color: accent
+                                            md_bg_color: lightgray
+                                            on_release: root.deleteRecord()
